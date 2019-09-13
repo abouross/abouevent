@@ -1,0 +1,13 @@
+<div ng-controller="StateCtrl as ctrl">
+    <div ng-show="$showOptions" class="options">
+        <md-radio-group ng-model="ctrl.filter" ng-change="ctrl.refresh()" flex>
+            <md-radio-button ng-value="null">Tous</md-radio-button>
+            <md-radio-button ng-value="{published:true}">Publié</md-radio-button>
+            <md-radio-button ng-value="{published:false}">Non Publié</md-radio-button>
+        </md-radio-group>
+    </div>
+    <md-content layout="column" layout-align="center center">
+        <md-progress-linear ng-if="ctrl.progress"></md-progress-linear>
+        <nvd3 class="fade" options="ctrl.chartOptions" data="ctrl.chartData"></nvd3>
+    </md-content>
+</div>

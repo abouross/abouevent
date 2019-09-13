@@ -1,0 +1,12 @@
+<div layout="column" flex layout-fill>
+    <md-nav-bar md-selected-nav-item="currentItemContext" aria-label="Small screen navbar">
+        <md-nav-item ng-repeat="item in settingsMenuItems"
+                     md-nav-sref="{{item.sref}}" name="{{item.context}}">
+            <md-icon>{{item.icon}}</md-icon>
+            {{item.name}}
+        </md-nav-item>
+    </md-nav-bar>
+    <md-content flex layout-fill class="page-content">
+        <ui-view></ui-view>
+    </md-content>
+</div>

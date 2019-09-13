@@ -1,0 +1,4 @@
+<md-content ng-controller="CourbeCtrl as ctrl" layout="column" layout-align="center center">
+    <md-progress-linear ng-if="ctrl.progress"></md-progress-linear>
+    <nvd3 class="fade" options="ctrl.chartOptions" data="ctrl.chartData"></nvd3>
+</md-content>

@@ -1,0 +1,170 @@
+<md-card class="md-padding">
+    <md-input-container md-is-error="ctrl.$errors && ctrl.$errors['name']">
+        <label>Nom complet</label>
+        <input type="text" name="name" ng-disabled="ctrl.preview" ng-model="ctrl.event.name" required>
+        <ul ng-if="ctrl.$errors && ctrl.$errors['name']" class="input-error">
+            <li ng-repeat="er in ctrl.$errors['name']">{{er}}</li>
+        </ul>
+    </md-input-container>
+    <div layout="row" layout-xs="column">
+        <md-input-container flex md-is-error="ctrl.$errors && ctrl.$errors['short_name']">
+            <label>Nom Raccourci</label>
+            <input type="text" name="short_name" ng-disabled="ctrl.preview" ng-model="ctrl.event.short_name" required>
+            <ul ng-if="ctrl.$errors && ctrl.$errors['short_name']" class="input-error">
+                <li ng-repeat="er in ctrl.$errors['short_name']">{{er}}</li>
+            </ul>
+        </md-input-container>
+        <md-input-container flex md-is-error="ctrl.$errors && ctrl.$errors['contact_email']">
+            <label>Email de contact</label>
+            <input type="email" name="contact_email" ng-disabled="ctrl.preview" ng-model="ctrl.event.contact_email"
+                   required>
+            <ul ng-if="ctrl.$errors && ctrl.$errors['contact_email']" class="input-error">
+                <li ng-repeat="er in ctrl.$errors['contact_email']">{{er}}</li>
+            </ul>
+        </md-input-container>
+    </div>
+    <div layout="row" layout-xs="column" layout-align="start center">
+        <!--<md-input-container flex layout-fill md-is-error="ctrl.$errors && ctrl.$errors['start_date']">
+            <label>Date du début</label>
+            <md-datepicker ng-disabled="ctrl.preview" ng-model="ctrl.event.start_date" md-date-locale="ctrl.dateLocale"
+                           required>
+            </md-datepicker>
+            <ul ng-if="ctrl.$errors && ctrl.$errors['start_date']" class="input-error">
+                <li ng-repeat="er in ctrl.$errors['start_date']">{{er}}</li>
+            </ul>
+        </md-input-container>-->
+        <md-input-container flex layout-fill md-is-error="ctrl.$errors && ctrl.$errors['start_date']">
+            <label>Date du début</label>
+            <input type="datetime" ng-disabled="ctrl.preview" ng-model="ctrl.event.start_date" required>
+            <ul ng-if="ctrl.$errors && ctrl.$errors['start_date']" class="input-error">
+                <li ng-repeat="er in ctrl.$errors['start_date']">{{er}}</li>
+            </ul>
+        </md-input-container>
+
+
+        <!--<md-input-container flex layout-fill md-is-error="ctrl.$errors && ctrl.$errors['end_date']">
+            <label>Date du fin</label>
+            <ab-datetime-picker ng-model="ctrl.event.end_date" required></ab-datetime-picker>
+            <ul ng-if="ctrl.$errors && ctrl.$errors['end_date']" class="input-error">
+                <li ng-repeat="er in ctrl.$errors['end_date']">{{er}}</li>
+            </ul>
+        </md-input-container>-->
+        <md-input-container flex layout-fill md-is-error="ctrl.$errors && ctrl.$errors['end_date']">
+            <label>Date du fin</label>
+            <input type="datetime" ng-disabled="ctrl.preview" ng-model="ctrl.event.end_date" required>
+            <ul ng-if="ctrl.$errors && ctrl.$errors['end_date']" class="input-error">
+                <li ng-repeat="er in ctrl.$errors['end_date']">{{er}}</li>
+            </ul>
+        </md-input-container>
+
+        <md-input-container>
+            <label>Timezone</label>
+            <input type="text" ng-model="ctrl.event.timezone.timezone" ng-disabled="true">
+        </md-input-container>
+        <md-input-container flex layout-fill md-is-error="ctrl.$errors && ctrl.$errors['image']">
+            <label>Image</label>
+            <ab-image-picker ng-model="ctrl.event.image" ng-disabled="ctrl.preview" required></ab-image-picker>
+            <ul ng-if="ctrl.$errors && ctrl.$errors['image']" class="input-error">
+                <li ng-repeat="er in ctrl.$errors['image']">{{er}}</li>
+            </ul>
+        </md-input-container>
+    </div>
+
+    <div layout="row" layout-xs="column" style="padding-top: 20px">
+        <md-input-container md-is-error="ctrl.$errors && ctrl.$errors['description']" flex>
+            <label>Description</label>
+            <textarea ng-disabled="ctrl.preview" name="description" rows="5" ng-model="ctrl.event.description"
+                      required></textarea>
+            <ul ng-if="ctrl.$errors && ctrl.$errors['description']" class="input-error">
+                <li ng-repeat="er in ctrl.$errors['description']">{{er}}</li>
+            </ul>
+        </md-input-container>
+        <div flex ng-if="$mdMedia('gt-xs')"></div>
+        <div flex layout="column">
+            <md-input-container flex layout-fill>
+                <md-checkbox ng-disabled="ctrl.preview" ng-model="ctrl.event.public" name="public"
+                             aria-label="Publique ?">
+                    Publique ?
+                </md-checkbox>
+            </md-input-container>
+            <md-input-container flex layout-fill>
+                <md-checkbox ng-disabled="true" ng-model="ctrl.event.published"
+                             aria-label="Publier">
+                    Publier
+                </md-checkbox>
+            </md-input-container>
+        </div>
+
+    </div>
+
+    <div layout="row" layout-xs="column" ng-if="ctrl.preview" style="color: rgba(0,0,0,0.38)!important;">
+        <div flex>
+            <label>Lieux de rencontre</label>
+            <md-list>
+                <md-list-item ng-repeat="item in ctrl.realEvent.venues">
+                    {{item.name}} - <strong>{{item.address.city}},
+                    <ab-country ab-display-local="fr" ab-country-code="item.address.country"></ab-country>
+                </md-list-item>
+            </md-list>
+        </div>
+
+        <div flex>
+            <label>Logéments</label>
+            <md-list>
+                <md-list-item ng-repeat="item in ctrl.realEvent.lodgings">
+                    {{item.name}} - <strong>{{item.address.city}},
+                    <ab-country ab-display-local="fr" ab-country-code="item.address.country"></ab-country>
+                </md-list-item>
+            </md-list>
+        </div>
+    </div>
+    <div layout="row" layout-xs="column" ng-if="!ctrl.preview">
+        <md-input-container flex>
+            <label>Lieux de rencontre</label>
+            <md-select ng-change="ctrl.filterLodgings(ctrl.event.venues)"
+                       ng-model="ctrl.event.venues" name="venues" required multiple>
+                <md-option ng-repeat="item in ctrl.venues" ng-value="item.id">
+                    {{item.name}} - <strong>{{item.address.city}},
+                    <ab-country ab-display-local="fr" ab-country-code="item.address.country"></ab-country>
+                </strong>
+                </md-option>
+            </md-select>
+        </md-input-container>
+
+        <md-input-container flex>
+            <label>Logéments</label>
+            <md-select ng-disabled="!ctrl.isLodgingEnable() || ctrl.preview"
+                       ng-model="ctrl.event.lodgings"
+                       name="lodgings" required multiple>
+                <md-option ng-repeat="item in ctrl.flodgings" ng-value="item.id">
+                    {{item.name}} - <strong>{{item.address.city}},
+                    <ab-country ab-display-local="fr" ab-country-code="item.address.country"></ab-country>
+                </strong>
+                </md-option>
+            </md-select>
+        </md-input-container>
+    </div>
+
+    <div layout="row" layout-xs="column">
+        <md-input-container flex>
+            <label>Type d'événement</label>
+            <md-select ng-disabled="ctrl.preview" ng-model="ctrl.event.eventType" name="eventType" required>
+                <md-option ng-repeat="item in ctrl.eventTypes" ng-value="item.id">
+                    {{item.value}}
+                </md-option>
+            </md-select>
+        </md-input-container>
+        <md-input-container flex>
+            <label>Théme d'événement</label>
+            <md-select ng-disabled="ctrl.preview" ng-model="ctrl.event.eventTheme" name="eventTheme" required>
+                <md-option ng-repeat="item in ctrl.eventThemes" ng-value="item.id">
+                    {{item.value}}
+                </md-option>
+            </md-select>
+        </md-input-container>
+    </div>
+
+    <md-button ng-if="!ctrl.gtXs" ng-click="ctrl.save()" class="md-primary md-raised">
+        <md-icon>save</md-icon>
+    </md-button>
+</md-card>

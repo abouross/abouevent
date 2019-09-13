@@ -1,0 +1,45 @@
+<div style="padding-top: 10px">
+    <md-toolbar ng-if="isList">
+        <div class="md-toolbar-tools">
+        <span>
+            <md-icon>list</md-icon>
+            Liste des Logements
+        </span>
+            <div layout-fill flex layout="row" layout-align="end center">
+                <md-button aria-label="Create" title="Nouvel Lieu"
+                           class="md-icon-button" ui-sref="admin.settings.lodgings.create">
+                    <md-icon>add</md-icon>
+                </md-button>
+            </div>
+        </div>
+    </md-toolbar>
+
+    <md-toolbar class="md-whiteframe-z2" ng-if="isForm">
+        <div class="md-toolbar-tools">
+        <span ng-if="!isNew">
+            <md-icon>edit</md-icon>
+            Modifier " {{lodging.name|uppercase}} "
+        </span>
+        <span ng-if="isNew">
+            <md-icon>add</md-icon>
+            Nouvel Logement
+        </span>
+
+            <div layout="row" layout-align="end center" flex layout-fill>
+                <md-button aria-label="List" ng-if="isForm" title="Retourner à la liste"
+                           class="md-icon-button"
+                           ui-sref="admin.settings.lodgings.list">
+                    <md-icon>list</md-icon>
+                </md-button>
+                <md-button aria-label="Create" title="Nouvel Lieu" ng-if="!isNew"
+                           class="md-icon-button" ui-sref="admin.settings.lodgings.create">
+                    <md-icon>add</md-icon>
+                </md-button>
+            </div>
+        </div>
+    </md-toolbar>
+</div>
+
+<md-content class="layout-padding" style="text-align: justify">
+    <ui-view></ui-view>
+</md-content>

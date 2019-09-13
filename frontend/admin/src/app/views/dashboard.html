@@ -1,0 +1,24 @@
+<div layout="row" layout-xs="column" ng-init="modelName = 'event'">
+    <ab-state flex layout-fill text="Tous les événements" icon="event"
+              ab-style="{'background-color': 'rgb(34, 167, 240)',color: '#fff'}" model="modelName"
+              params="null">
+    </ab-state>
+    <ab-state flex layout-fill text="Evénements publiés" icon="publish"
+              ab-style="{'background-color':'rgb(255, 180, 0)',color:'#fff'}"
+              model="modelName" params="publishedParams">
+    </ab-state>
+    <ab-state flex layout-fill text="Evénements en cours" icon="hourglass_full"
+              ab-style="{'background-color':'rgb(26, 188, 156)',color:'#fff'}"
+              model="modelName" params="runningParams">
+    </ab-state>
+</div>
+
+<div layout-gt-md="row">
+    <panel-widget flex title="Derniérs événements" template="app/views/partials/last_events.html"
+                  options="true"></panel-widget>
+    <div layout="column">
+        <panel-widget class="fixed-height-widget" title="Statistiques" options="true" template="app/views/partials/states.html"></panel-widget>
+        <panel-widget class="fixed-height-widget" title="Evolution" template="app/views/partials/courbe.html"></panel-widget>
+    </div>
+</div>
+

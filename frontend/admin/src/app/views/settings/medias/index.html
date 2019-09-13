@@ -1,0 +1,53 @@
+<div class="md-padding">
+    <md-toolbar md-theme="default" class="md-whiteframe-z1">
+        <div class="md-toolbar-tools">
+            <md-button ng-click="toggleSelect()" class="md-icon-button">
+                <md-icon ng-show="!enableSelect">check</md-icon>
+                <md-icon ng-show="enableSelect">keyboard_return</md-icon>
+            </md-button>
+            <md-checkbox aria-label="select all" ng-show="enableSelect" ng-model="this.selectAll"
+                         ng-change="toggleAllSelect()" ng-checked="this.selectAll">
+                {{selected.length}}
+            </md-checkbox>
+
+            <md-button class="md-icon-button" ng-click="refreshMedias()">
+                <md-icon>refresh</md-icon>
+            </md-button>
+
+            <md-button class="md-icon-button" ng-click="uploadMedia()" title="Déposer une image">
+                <md-icon>file_upload</md-icon>
+            </md-button>
+
+            <div layout="row" layout-align="end center" flex layout-fill>
+                <md-button class="md-icon-button md-warn" ng-click="deleteBatch()" ng-show="enableSelect" md-theme="abouevent">
+                    <md-icon>delete</md-icon>
+                </md-button>
+            </div>
+        </div>
+    </md-toolbar>
+    <div ab-progress="progress" ab-progress-show>
+        <md-grid-list md-cols="4" md-row-height="4:3" class="media-grid-list">
+            <md-grid-tile ng-repeat="item in files" class="media-grid-tile">
+                <md-icon class="zoom-icon" ng-click="show(item,$event)">zoom_in</md-icon>
+                <md-grid-tile-header>
+                    <md-checkbox aria-label="select" md-theme="default" ng-show="enableSelect"
+                                 ng-model="item.selected"
+                                 ng-change="selectItem(item)" ng-init="item.selected = false">
+                    </md-checkbox>
+                </md-grid-tile-header>
+                <div ab-img-progress="item.imgProgress">
+                </div>
+                <img ng-src="{{item.thumbUrl}}" class="media-grid-tile-media" ng-click="show(item,$event)">
+                <md-grid-tile-footer layout="row" layout-align="end center">
+                    <md-button class="md-warn md-icon-button" ng-click="deleteItem(item.id)">
+                        <md-icon>delete</md-icon>
+                    </md-button>
+                    <md-button href="{{item.downloadUrl}}" class="md-icon-button" md-theme="default">
+                        <md-icon>file_download</md-icon>
+                    </md-button>
+                </md-grid-tile-footer>
+            </md-grid-tile>
+        </md-grid-list>
+    </div>
+</div>
+

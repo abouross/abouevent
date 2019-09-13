@@ -1,0 +1,230 @@
+<div layout="column">
+    <!------- First toolbar -------------->
+    <md-toolbar style="background-color: #fff">
+        <div class="md-whiteframe-z1 md-toolbar-tools">
+            <div layout="row" layout-fill layout-align="left center">
+                <md-button class="md-icon-button md-warn" ng-click="ctrl.deleteBatch()"
+                           ng-show="selectedAction()">
+                    <md-icon>delete</md-icon>
+                </md-button>
+                <md-button class="md-icon-button md-accent" ng-click="ctrl.refreshItems()">
+                    <md-icon>refresh</md-icon>
+                </md-button>
+            </div>
+            <md-button class="md-icon-button md-accent" title="Affichage par Liste" ng-click="ctrl.switchViewMode()"
+                       ng-if="ctrl.viewMode == 'grid'">
+                <md-icon>view_list</md-icon>
+            </md-button>
+            <md-button class="md-icon-button md-accent" ng-click="ctrl.switchViewMode()"
+                       title="Affichage par tableau" ng-if="ctrl.viewMode == 'list'">
+                <md-icon>view_module</md-icon>
+            </md-button>
+            <md-button aria-label="Add" class="md-icon-button md-accent" ui-sref="admin.events.create">
+                <md-icon>add</md-icon>
+            </md-button>
+            <md-button class="md-accent md-icon-button" ng-show="!ctrl.showSearch" ng-click="ctrl.showSearch = true">
+                <md-icon>search</md-icon>
+            </md-button>
+            <form ng-show="ctrl.showSearch" ng-submit="ctrl.handleSearch(search)">
+                <div layout="row" layout-align="center center">
+                    <md-input-container flex layout-fill class="search-input">
+                        <input type="search" ng-model="ctrl.search" placeholder="Chercher...">
+                    </md-input-container>
+                    <md-button class="md-icon-button md-primary" type="submit">
+                        <md-icon>search</md-icon>
+                    </md-button>
+                </div>
+            </form>
+            <md-button aria-label="Close" ng-show="ctrl.showSearch" ng-click="ctrl.showSearch = false"
+                       class="md-icon-button md-accent">
+                <md-icon>close</md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+
+    <!------- Second Tollbar -------------->
+    <md-toolbar style="margin-top: 16px;" md-theme="default">
+        <div class="md-toolbar-tools md-padding">
+            <form name="filterForm" md-theme="abouevent" flex layout="row" ng-submit="ctrl.filtrer(ctrl.filter)">
+                <md-input-container>
+                    <label>Publié</label>
+                    <md-select ng-model="ctrl.filter.published">
+                        <md-option ng-value="undefined">Tous</md-option>
+                        <md-option ng-value="true">Oui</md-option>
+                        <md-option ng-value="false">Non</md-option>
+                    </md-select>
+                </md-input-container>
+                <md-input-container>
+                    <label>Publique</label>
+                    <md-select ng-model="ctrl.filter.public">
+                        <md-option ng-value="undefined">Tous</md-option>
+                        <md-option ng-value="true">Oui</md-option>
+                        <md-option ng-value="false">Non</md-option>
+                    </md-select>
+                </md-input-container>
+                <md-input-container>
+                    <label>Type</label>
+                    <md-select ng-model="ctrl.filter.type">
+                        <md-option ng-value="undefined">Tous</md-option>
+                        <md-option ng-value="type.id" ng-repeat="type in ctrl.eventTypes">{{type.value}}</md-option>
+                    </md-select>
+                </md-input-container>
+                <md-input-container>
+                    <label>Status</label>
+                    <md-select ng-model="ctrl.filter.status">
+                        <md-option ng-value="undefined">Tous</md-option>
+                        <md-option ng-value="{start_date:{value:'now',op:'>',type:'datetime'}}">
+                            Pas encore
+                        </md-option>
+                        <md-option
+                                ng-value="{start_date:{value:'now',op:'<=',type:'datetime'},end_date:{value:'now',op:'>=',type:'datetime'}}">
+                            En cours
+                        </md-option>
+                        <md-option ng-value="{end_date:{value:'now',op:'<',type:'datetime'}}">
+                            Terminé
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+                <md-button class="md-accent md-mini" type="submit">
+                    filtrer
+                </md-button>
+            </form>
+            <md-checkbox md-theme="abouevent" ng-if="ctrl.viewMode == 'grid'" aria-label="Select All"
+                         ng-click="toggleAllSelect($event)"
+                         ng-checked="allSelected()">
+            </md-checkbox>
+            <md-fab-speed-dial md-theme="abouevent" ng-if="ctrl.viewMode == 'list'" md-direction="left"
+                               style="position: absolute;right: 0" class="md-scale">
+                <md-fab-trigger>
+                    <md-button aria-label="Menu" class="md-icon-button">
+                        <md-icon>more_vert</md-icon>
+                    </md-button>
+                </md-fab-trigger>
+
+                <md-fab-actions>
+                    <div layout="row" class="md-whiteframe-z1" style="padding: 16px 16px 0 16px;background-color: #fff"
+                         layout-align="start center">
+                        <md-checkbox ng-change="ctrl.updateColumns()" ng-model="ctrl.columns[i].show"
+                                     ng-repeat="(i,column) in ctrl.columns">
+                            {{column.label||column.key}}
+                        </md-checkbox>
+                    </div>
+                </md-fab-actions>
+            </md-fab-speed-dial>
+        </div>
+    </md-toolbar>
+
+    <!------ Top Pagination ------->
+    <md-table-pagination flex ng-if="ctrl.pagination.perPage > 5 && ctrl.events.length > 5"
+                         md-label="{page: 'Page:',rowsPerPage: 'Lignes par page:',of: 'sur'}"
+                         md-limit="ctrl.pagination.perPage" md-limit-options="[5, 10, 15]"
+                         md-page="ctrl.pagination.page" md-total="{{ctrl.total}}"
+                         md-on-paginate="onPaginate" md-page-select>
+    </md-table-pagination>
+
+
+    <!---- Grid --------------->
+    <div ab-progress="ctrl.progress" ab-progress-show ng-if="ctrl.viewMode == 'grid'"
+         layout-fill flex class="md-padding">
+        <md-grid-list md-cols="3" md-cols-sm="2" md-cols-xs="1" md-row-height="4:3" md-gutter="16px"
+                      class="event-grid-list">
+            <md-grid-tile ng-repeat="item in ctrl.events" class="md-whiteframe-z2 event-grid-tile">
+                <md-icon class="zoom-icon" ui-sref="admin.events.event({id:item.id,action:'preview'})">zoom_in</md-icon>
+                <md-grid-tile-header>
+                    <div layout="row" layout-align="start center" class="md-padding">
+                        <md-checkbox aria-label="select" md-theme="default"
+                                     ng-click="toggleSelect(item,$event)" ng-checked="isSelected(item)">
+                        </md-checkbox>
+                        <h3>{{item.short_name}}</h3>
+                    </div>
+                </md-grid-tile-header>
+                <div ab-img-progress="item.image.imgProgress">
+                </div>
+                <img ng-src="{{item.image.thumbUrl}}" style="height: 100%;width: 100%">
+                <span class="status"
+                      ng-class="{'text-info': item.status_code == 0,'text-success':item.status_code == 1,'text-danger':item.status_code == 2}">
+                        {{item.status}}
+                </span>
+                <md-grid-tile-footer>
+                    <md-button ui-sref="admin.events.event({id:item.id,action:'edit'})" md-theme="default"
+                               class="md-icon-button md-primary">
+                        <md-icon>edit</md-icon>
+                    </md-button>
+                    <md-button ng-click="ctrl.actionSheet(item)" md-theme="default">
+                        Autres
+                        <md-icon>keyboard_arrow_down</md-icon>
+                    </md-button>
+                    <span>{{item.eventType.value}}</span>
+                </md-grid-tile-footer>
+            </md-grid-tile>
+        </md-grid-list>
+    </div>
+
+    <!---- List ------->
+
+    <md-table-container ng-if="ctrl.viewMode == 'list'" style="margin-top: 20px;">
+        <table md-table md-row-select multiple ng-model="ctrl.selected" class="table table-hover table-bordered"
+               md-progress="ctrl.progress">
+            <thead md-head md-order="ctrl.sort" md-on-reorder="onPaginate">
+            <tr md-row>
+                <th md-column md-order-by="id" ng-if="ctrl.columns[0].show"><span>ID</span></th>
+                <th md-column md-order-by="short_name" ng-if="ctrl.columns[1].show"><span>Nom</span></th>
+                <th ng-if="ctrl.columns[2].show" md-column md-datetime md-order-by="start_date" md-desc>
+                    <span>Date du début</span>
+                </th>
+                <th ng-if="ctrl.columns[3].show" md-column md-datetime md-order-by="end_date" md-desc>
+                    <span>Date de la fin</span>
+                </th>
+                <th ng-if="ctrl.columns[4].show" md-column><span>Status</span></th>
+                <th ng-if="ctrl.columns[5].show" md-column><span>Type</span></th>
+                <th ng-if="ctrl.columns[6].show" md-column md-datetime md-order-by="created_at" md-desc>
+                    <span>Crée le</span>
+                </th>
+                <th ng-if="ctrl.columns[7].show" md-column md-datetime md-order-by="updated_at" md-desc>
+                    <span>Mis à jour le</span>
+                </th>
+                <th md-column><span>Actions</span></th>
+            </tr>
+            </thead>
+            <tbody md-body>
+            <tr md-row md-select="item" md-on-select="ctrl.onSelectChange" md-on-deselect="ctrl.onSelectChange"
+                md-select-id="id"
+                id="lodging-row-{{item.id}}"
+                ng-repeat="item in ctrl.events">
+                <td md-cell ng-if="ctrl.columns[0].show">{{item.id}}</td>
+                <td md-cell ng-if="ctrl.columns[1].show">{{item.short_name}}</td>
+                <td ng-if="ctrl.columns[2].show" md-cell>{{item.start_date|date:'short'}}</td>
+                <td ng-if="ctrl.columns[3].show" md-cell>{{item.end_date|date:'short'}}</td>
+                <td ng-if="ctrl.columns[4].show" md-cell
+                    ng-class="{'text-info': item.status_code == 0,'text-success':item.status_code == 1,'text-danger':item.status_code == 2}">
+                    {{item.status}}
+                </td>
+                <td ng-if="ctrl.columns[5].show" md-cell>{{item.eventType.value}}</td>
+                <td ng-if="ctrl.columns[6].show" md-cell>{{item.created_at|date:'short'}}</td>
+                <td ng-if="ctrl.columns[7].show" md-cell>{{item.updated_at|date:'short'}}</td>
+                <td md-cell>
+                    <div layout="row">
+                        <md-button ui-sref="admin.events.event({id:item.id,action:'edit'})"
+                                   class="md-icon-button md-primary">
+                            <md-icon>edit</md-icon>
+                        </md-button>
+                        <md-button class="md-icon-button" ng-click="ctrl.actionSheet(item)">
+                            <md-icon>keyboard_arrow_down</md-icon>
+                        </md-button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </md-table-container>
+
+
+    <!------ Pagination ------->
+
+    <md-table-pagination md-label="{page: 'Page:',rowsPerPage: 'Lignes par page:',of: 'sur'}"
+                         md-limit="ctrl.pagination.perPage" md-limit-options="[5, 10, 15]"
+                         md-page="ctrl.pagination.page" md-total="{{ctrl.total}}"
+                         md-on-paginate="onPaginate" md-page-select>
+    </md-table-pagination>
+</div>
+

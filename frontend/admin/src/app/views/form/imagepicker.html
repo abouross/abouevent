@@ -1,0 +1,28 @@
+<div layout="row" layout-align="center center" ng-class="{preview:imgPicker.disabled,multiple:imgPicker.multiple}"
+     class="image-select">
+    <div class="img-item" ng-if="imgPicker.isSingleSelected()">
+        <md-icon ng-if="!imgPicker.disabled && imgPicker.required" ng-click="imgPicker.replace()"
+                 class="delete-btn md-warn">
+            refresh
+        </md-icon>
+        <md-icon ng-if="!imgPicker.disabled && !imgPicker.required" ng-click="imgPicker.remove(null)"
+                 class="md-warn delete-btn">
+            delete
+        </md-icon>
+        <img ng-src="{{imgPicker.thumbUrl(imgPicker.selected)}}" ng-class="{preview:imgPicker.disabled}">
+    </div>
+    <md-button ng-if="!imgPicker.disabled" ng-show="!imgPicker.multiple && !imgPicker.selected"
+               ng-click="imgPicker.replace()"
+               class="md-primary md-icon-button">
+        <md-icon>add</md-icon>
+    </md-button>
+    <div class="img-item" ng-if="imgPicker.isMultipleSelected()" ng-repeat="item in imgPicker.selected">
+        <md-icon ng-if="!imgPicker.disabled" ng-click="imgPicker.remove(item)" class="md-warn delete-btn">delete
+        </md-icon>
+        <img ng-src="{{imgPicker.thumbUrl(item)}}" ng-class="{preview:imgPicker.disabled}">
+    </div>
+    <md-button ng-if="!imgPicker.disabled" ng-show="imgPicker.multiple" ng-click="imgPicker.push()"
+               class="md-primary md-icon-button">
+        <md-icon>add</md-icon>
+    </md-button>
+</div>

@@ -1,0 +1,32 @@
+<div layout="row" layout-xs="column" flex layout-fill layout-align-xs="center center"
+     layout-align="left center" class="md-whiteframe-z1">
+    <div layout="row" layout-fill layout-align="start center" layout-align-xs="center center">
+        <h4 style="padding-left: 16px">
+            <md-icon>add</md-icon>
+            Nouvel Evenement
+            {{ctrl.event.name?' - '+ctrl.event.name:''}}
+        </h4>
+    </div>
+</div>
+<div flex layout-fill>
+    <form name="eventForm" ng-submit="ctrl.save()">
+        <md-tabs md-stretch-tabs="always" md-dynamic-height="true" md-selected="0">
+            <md-tab>
+                <md-tab-label>
+                    Générale
+                </md-tab-label>
+                <md-tab-body>
+                    <ng-include src="'app/views/events/form/general.html'"></ng-include>
+                </md-tab-body>
+            </md-tab>
+            <md-tab>
+                <md-tab-label>
+                    Page web et couleurs
+                </md-tab-label>
+                <md-tab-body>
+                    <ng-include src="'app/views/events/form/webpage_colors.html'"></ng-include>
+                </md-tab-body>
+            </md-tab>
+        </md-tabs>
+    </form>
+</div>

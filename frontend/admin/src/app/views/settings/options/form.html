@@ -1,0 +1,42 @@
+<form ng-submit="submitForm(optionForm)" name="optionForm" ng-model="option">
+    <div layout="column" flex layout-fill class="md-whiteframe-z1 md-padding" ab-progress="progress" ab-progress-show>
+        <ul flex layout-fill ng-if="errors"
+            style="list-style: none;padding: 10px 0;background: #C14B49;color: rgba(0,0,0,.6);margin-bottom:20px">
+            <li class="md-2-line" ng-repeat="(field,error) in errors" style="font-weight: bold">
+                <div class="md-list-item-inner md-warn">
+                    <ul>
+                        <li ng-repeat="e in error">{{e}}</li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+        <div layout="row" layout-sm="column" flex layout-fill>
+            <md-input-container layout-fill flex style="margin-bottom: 18px">
+                <label>Type d'option</label>
+                <md-select name="name" ng-model="option.name" placeholder="Selectionner le type d'option" required>
+                    <md-option ng-value="key" ng-repeat="(key,value) in optionsTypes">
+                        {{ value }}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+            <md-input-container layout-fill flex>
+                <label>Valeur</label>
+                <input type="text" name="value" ng-model="option.value" required>
+            </md-input-container>
+        </div>
+        <div layout="row" layout-sm="column" flex layout-fill>
+            <md-button type="submit" class="md-raised md-accent" title="sauvegarder">
+                <md-icon>save</md-icon>
+            </md-button>
+            <md-button ng-click="redirect()" ng-if="!isNew"
+                       type="submit" class="md-raised md-accent"
+                       title="Sauvegarder et retourner à la list">
+                <md-icon>save</md-icon>
+                ->
+                <md-icon>list</md-icon>
+            </md-button>
+        </div>
+
+    </div>
+    </div>
+</form>

@@ -1,0 +1,141 @@
+<md-card class="md-padding">
+    <div layout="row" layout-xs="column" style="margin: 20px 0">
+        <md-input-container flex layout-fill>
+            <label>Couleur principale</label>
+            <ab-colorpicker available-colors="ctrl.availableColors.primary"
+                            ng-model="ctrl.event.color.primary" required ng-disabled="ctrl.preview">
+            </ab-colorpicker>
+        </md-input-container>
+        <md-input-container flex layout-fill>
+            <label>Couleur secondaire</label>
+            <ab-colorpicker available-colors="ctrl.availableColors.secondary" ng-disabled="ctrl.preview"
+                            ng-model="ctrl.event.color.secondary" required>
+            </ab-colorpicker>
+        </md-input-container>
+        <md-input-container flex layout-fill>
+            <label>Couleur d’accentuation</label>
+            <ab-colorpicker available-colors="ctrl.availableColors.accent" ng-disabled="ctrl.preview"
+                            ng-model="ctrl.event.color.accent" required>
+            </ab-colorpicker>
+        </md-input-container>
+    </div>
+    <div layout="row">
+        <div layout="column" flex layout-fill>
+            <md-input-container>
+                <md-switch aria-label="Page Web publique ?" ng-model="ctrl.event.splashpage_public"
+                            ng-if="!ctrl.preview">
+                    Page Web publique ?
+                </md-switch>
+                <md-checkbox ng-if="ctrl.preview" aria-label="Page Web publique ?"
+                             ng-model="ctrl.event.splashpage_public"
+                              ng-disabled="ctrl.preview">
+                    Page Web publique ?
+                </md-checkbox>
+            </md-input-container>
+            <md-input-container>
+                <md-switch aria-label="Inclure le programme ?" ng-model="ctrl.event.splashpage_include_program"
+                            ng-if="!ctrl.preview">
+                    Inclure le programme ?
+                </md-switch>
+                <md-checkbox ng-if="ctrl.preview" aria-label="Inclure le programme ?"
+                             ng-model="ctrl.event.splashpage_include_program"
+                              ng-disabled="ctrl.preview">
+                    Inclure le programme ?
+                </md-checkbox>
+            </md-input-container>
+            <md-input-container>
+                <md-switch aria-label="Inclure la banniére ?" ng-model="ctrl.event.splashpage_include_banner"
+                            ng-if="!ctrl.preview">
+                    Inclure la banniére ?
+                </md-switch>
+                <md-checkbox aria-label="Inclure la banniére ?" ng-model="ctrl.event.splashpage_include_banner"
+                              ng-disabled="ctrl.preview" ng-if="ctrl.preview">
+                    Inclure la banniére ?
+                </md-checkbox>
+            </md-input-container>
+            <md-input-container>
+                <md-switch aria-label="Inclure l'inscription ?" ng-model="ctrl.event.splashpage_include_registrations"
+                            ng-if="!ctrl.preview">
+                    Inclure l'inscription ?
+                </md-switch>
+                <md-checkbox aria-label="Inclure l'inscription ?" ng-model="ctrl.event.splashpage_include_registrations"
+                             ng-disabled="ctrl.preview" ng-if="ctrl.preview">
+                    Inclure l'inscription ?
+                </md-checkbox>
+            </md-input-container>
+        </div>
+        <div layout="column" flex layout-fill>
+            <md-input-container>
+                <md-switch aria-label="Inclure les logéments ?" ng-model="ctrl.event.splashpage_include_lodgings"
+                            ng-if="!ctrl.preview">
+                    Inclure les logéments ?
+                </md-switch>
+                <md-checkbox aria-label="Inclure les logéments ?" ng-model="ctrl.event.splashpage_include_lodgings"
+                            ng-if="ctrl.preview" ng-disabled="ctrl.preview">
+                    Inclure les logéments ?
+                </md-checkbox>
+            </md-input-container>
+            <md-input-container>
+                <md-switch aria-label="Inclure les réseaux sociaux ?"
+                           ng-model="ctrl.event.splashpage_include_social_media"
+                           ng-if="!ctrl.preview">
+                    Inclure les réseaux sociaux ?
+                </md-switch>
+                <md-checkbox aria-label="Inclure les réseaux sociaux ?"
+                             ng-model="ctrl.event.splashpage_include_social_media"
+                             ng-disabled="ctrl.preview" ng-if="ctrl.preview">
+                    Inclure les réseaux sociaux ?
+                </md-checkbox>
+            </md-input-container>
+            <md-input-container>
+                <md-switch aria-label="Inclure le(s) lieu(x) de rencontre ?"
+                           ng-model="ctrl.event.splashpage_include_venue"
+                           ng-if="!ctrl.preview">
+                    Inclure le(s) lieu(x) de rencontre ?
+                </md-switch>
+                <md-checkbox aria-label="Inclure le(s) lieu(x) de rencontre ?"
+                             ng-model="ctrl.event.splashpage_include_venue"
+                             ng-disabled="ctrl.preview" ng-if="ctrl.preview">
+                    Inclure le(s) lieu(x) de rencontre ?
+                </md-checkbox>
+            </md-input-container>
+
+            <md-input-container>
+                <md-switch aria-label="Inclure les sponsors ?"
+                           ng-model="ctrl.event.splashpage_include_sponsors"
+                           ng-if="!ctrl.preview">
+                    Inclure les sponsors ?
+                </md-switch>
+                <md-checkbox aria-label="Inclure les sponsors ?"
+                             ng-model="ctrl.event.splashpage_include_sponsors"
+                             ng-disabled="ctrl.preview" ng-if="ctrl.preview">
+                    Inclure les sponsors ?
+                </md-checkbox>
+            </md-input-container>
+        </div>
+    </div>
+    <div layout="row" layout-xs="column">
+        <md-input-container flex layout-fill class="md-padding">
+            <label>Description de l'inscription</label>
+            <textarea ng-disabled="ctrl.preview" ng-model="ctrl.event.splashpage_registration_description"
+                      aria-label="Description de l'inscription"></textarea>
+        </md-input-container>
+        <md-input-container flex layout-fill class="md-padding">
+            <label>Description des sponsors</label>
+            <textarea ng-disabled="ctrl.preview" ng-model="ctrl.event.splashpage_sponsor_description"
+                      aria-label="Description des sponsors"></textarea>
+        </md-input-container>
+    </div>
+    <div layout="row" layout-xs="column">
+        <md-input-container flex layout-fill class="md-padding">
+            <label>Description des logéments</label>
+            <textarea ng-disabled="ctrl.preview" ng-model="ctrl.event.splashpage_lodging_description"
+                      aria-label="Description des logéments"></textarea>
+        </md-input-container>
+        <md-input-container flex layout-fill class="md-padding">
+            <label>Description du banniére</label>
+            <textarea ng-disabled="ctrl.preview" ng-model="ctrl.event.splashpage_banner_description"
+                      aria-label="Description du banniére"></textarea>
+        </md-input-container>
+    </div>
+</md-card>

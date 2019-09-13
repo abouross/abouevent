@@ -1,0 +1,47 @@
+<div ng-controller="LastEventsCtrl as ctrl">
+    <div ng-show="$showOptions" class="options">
+        <md-content layout="row" class="md-padding">
+            <md-radio-group ng-model="ctrl.filter.criteria" ng-change="ctrl.refresh()" flex>
+                <md-radio-button ng-value="null">Tous</md-radio-button>
+                <md-radio-button ng-value="{start_date:{value:'now',op:'>',type:'datetime'},title:'Pas Encore'}">
+                    Pas encore
+                </md-radio-button>
+                <md-radio-button
+                        ng-value="{start_date:{value:'now',op:'<=',type:'datetime'},end_date:{value:'now',op:'>=',type:'datetime'},title:'En cours'}">
+                    En cours
+                </md-radio-button>
+                <md-radio-button ng-value="{end_date:{value:'now',op:'<',type:'datetime'},title:'Terminé'}">
+                    Terminé
+                </md-radio-button>
+            </md-radio-group>
+            <md-radio-group ng-model="ctrl.filter.published" ng-change="ctrl.refresh()" flex>
+                <md-radio-button ng-value="null">Tous</md-radio-button>
+                <md-radio-button ng-value="{published:true}">Publié</md-radio-button>
+                <md-radio-button ng-value="{published:false}">Non Publié</md-radio-button>
+            </md-radio-group>
+            <md-input-container flex>
+                <input type="number" ng-model="ctrl.perPage" placeholder="Limite" ng-change="ctrl.refresh()">
+            </md-input-container>
+        </md-content>
+    </div>
+
+    <div layout="column">
+        <h4 ng-show="ctrl.subtitle">{{ctrl.subtitle}}</h4>
+        <md-progress-linear ng-if="ctrl.progress"></md-progress-linear>
+        <table ng-hide="ctrl.progress" class="fade table table-hover table-bordered">
+            <tbody>
+            <tr class="hover-hand" ui-sref="admin.events.event({id:item.id,action:'preview'})" ng-repeat="item in ctrl.events">
+                <td>
+                    {{item.short_name}}
+                </td>
+                <td>
+                    {{item.eventType.value}}
+                </td>
+                <td ng-class="{'text-info': item.status_code == 0,'text-success':item.status_code == 1,'text-danger':item.status_code == 2}">
+                    {{item.status}}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

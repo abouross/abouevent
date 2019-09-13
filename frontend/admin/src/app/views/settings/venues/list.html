@@ -1,0 +1,78 @@
+<div class="table-responsive-vertical md-whiteframe-z1">
+    <div layout="row" layout-xs="column" flex layout-fill layout-align-xs="center center" layout-align="left center">
+        <div layout="row" layout-fill layout-align="left center" layout-align-xs="center cerefreshList
+        $po  xwefreshListnter">
+            <md-button class="md-icon-button md-warn" ng-click="deleteBatch()" ng-disabled="!selectAction">
+                <md-icon>delete</md-icon>
+            </md-button>
+            <md-button class="md-icon-button md-primary" ng-click="refreshList()">
+                <md-icon>refresh</md-icon>
+            </md-button>
+        </div>
+        <form class="md-padding">
+            <md-input-container md-no-float style="margin:0">
+                <input type="search" ng-model="search" placeholder="Chercher..."
+                       ng-change="refreshSearch(search)">
+            </md-input-container>
+
+        </form>
+    </div>
+
+    <md-table-container ab-progress="progress">
+        <table md-table md-row-select multiple ng-model="selected" class="table table-hover table-bordered"
+               md-progress="progress">
+            <thead md-head md-order="sort" md-on-reorder="getVenues">
+            <tr md-row>
+                <th md-column md-order-by="name"><span>Nom</span></th>
+                <th md-column><span>Site web</span></th>
+                <th md-column><span>Adresse</span></th>
+                <th md-column md-numeric><span>Evenements</span></th>
+                <th md-column md-datetime md-order-by="created_at" md-desc><span>Crée le</span></th>
+                <th md-column><span>Actions</span></th>
+            </tr>
+            </thead>
+            <tbody md-body>
+            <tr md-row md-select="item" md-on-select="onSelectChange" md-on-deselect="onSelectChange" md-select-id="id"
+                id="venue-row-{{item.id}}"
+                ng-repeat="item in venues">
+                <td md-cell>{{item.name}}</td>
+                <td md-cell>
+                    <a target="_blank" href="{{item.website}}">
+                        {{item.website}}
+                        <md-icon>link</md-icon>
+                    </a>
+                </td>
+                <td md-cell>
+                    <ul style="padding: 0">
+                        <li>{{item.address.address}}</li>
+                        <li>{{item.address.city}}</li>
+                        <li><strong>
+                            <ab-country ab-country-code="item.address.country" ab-display-local="fr"></ab-country>
+                        </strong></li>
+                    </ul>
+                </td>
+                <td md-cell>{{item.events_count}}</td>
+                <td md-cell>{{item.created_at|date:'short'}}</td>
+
+                <td md-cell>
+                    <div layout="row">
+                        <md-button ui-sref="admin.settings.venues.update({id:item.id})"
+                                   class="md-icon-button md-primary">
+                            <md-icon>edit</md-icon>
+                        </md-button>
+                        <md-button ng-click="deleteItem(item.id)" class="md-icon-button md-warn">
+                            <md-icon>delete</md-icon>
+                        </md-button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </md-table-container>
+
+    <md-table-pagination md-label="{page: 'Page:',rowsPerPage: 'Lignes par page:',of: 'sur'}"
+                         md-limit="pagination.perPage" md-limit-options="[5, 10, 15]"
+                         md-page="pagination.page" md-total="{{total}}"
+                         md-on-paginate="getVenues()" md-page-select>
+    </md-table-pagination>
+</div>

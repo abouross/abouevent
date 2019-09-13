@@ -1,0 +1,20 @@
+<md-dialog aria-label="Média dialog" class="media-dialog">
+    <md-dialog-content>
+        <div class="md-padding">
+            <p ng-show="error">Une erreur est survenue lors de l'envoi du fichier</p>
+            <form ng-upload="uploadComplete(content)" error-catcher="onError(error)" action="http://localhost:8000/api/medias" >
+                <md-input-container>
+                    <input aria-label="file" type="file" name="data_file" required/>
+                </md-input-container>
+                <md-button type="submit" ng-disabled="$isUploading">
+                    Envoyer
+                </md-button>
+            </form>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions>
+        <md-button ng-click="closeDialog()" class="md-primary">
+            Fermer
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

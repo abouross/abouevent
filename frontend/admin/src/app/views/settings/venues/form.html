@@ -1,0 +1,73 @@
+<form ng-submit="submitForm(venueForm)" name="venueForm" ng-model="venue">
+    <div layout="column" flex layout-fill class="md-whiteframe-z1 md-padding" ab-progress="progress" ab-progress-show>
+        <ul flex layout-fill ng-if="errors"
+            style="list-style: none;padding: 10px 0;background: #C14B49;color: rgba(0,0,0,.6);margin-bottom:20px">
+            <li class="md-2-line" ng-repeat="(field,error) in errors" style="font-weight: bold">
+                <div class="md-list-item-inner md-warn">
+                    <ul>
+                        <li ng-repeat="e in error">{{e}}</li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+
+        <div layout="row" layout-sm="column" flex layout-fill>
+            <md-input-container layout-fill flex>
+                <label>Nom</label>
+                <input type="text" name="name" ng-model="venue.name" required>
+            </md-input-container>
+            <md-input-container layout-fill flex>
+                <label>Site web</label>
+                <input type="url" name="website" ng-model="venue.website" required>
+            </md-input-container>
+        </div>
+        <div layout="row" layout-sm="column" flex layout-fill>
+            <div layout="column" flex layout-fill>
+                <md-input-container layout-fill flex style="margin-bottom: 18px">
+                    <label>Pays</label>
+                    <md-select name="country" ng-model="venue.address.country" placeholder="Selectionner un pays">
+                        <md-option ng-value="country.code" ng-repeat="country in countries">{{ country.name }}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+                <md-input-container layout-fill flex>
+                    <label>Ville</label>
+                    <input type="text" name="city" ng-model="venue.address.city" required>
+                </md-input-container>
+                <md-input-container layout-fill flex>
+                    <label>Address</label>
+                    <textarea type="text" rows="3" name="address" ng-model="venue.address.address"
+                              required></textarea>
+                </md-input-container>
+                <ab-image-file ng-model="venue.image" multiple="false" placeholder="Image" required>
+                </ab-image-file>
+            </div>
+            <div layout="column" flex layout-fill>
+                <md-input-container layout-fill flex>
+                    <label>Latitude</label>
+                    <input type="text" name="latitude" ng-model="venue.latitude">
+                </md-input-container>
+                <md-input-container layout-fill flex>
+                    <label>Longitude</label>
+                    <input type="text" name="longitude" ng-model="venue.longitude">
+                </md-input-container>
+                <md-input-container layout-fill flex>
+                    <label>Description</label>
+                    <textarea name="description" ng-model="lodging.description" rows="5"></textarea>
+                </md-input-container>
+            </div>
+        </div>
+        <div>
+            <md-button type="submit" class="md-raised md-accent" title="sauvegarder">
+                <md-icon>save</md-icon>
+            </md-button>
+            <md-button ng-click="redirect()" ng-if="!isNew"
+                       type="submit" class="md-raised md-accent"
+                       title="Sauvegarder et retourner à la list">
+                <md-icon>save</md-icon>
+                ->
+                <md-icon>list</md-icon>
+            </md-button>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,48 @@
+<md-button ng-if="ctrl.isEvent && ctrl.gtXs && !ctrl.preview" aria-label="Save"
+           class="md-accent md-fab md-fab-top-right" ng-click="ctrl.save()"
+           style="position: fixed;top:84px">
+    <md-icon>save</md-icon>
+</md-button>
+
+<md-button ng-if="ctrl.isCreate && ctrl.gtXs" aria-label="Save"
+           class="md-accent md-fab md-fab-top-right" ng-click="ctrl.save()"
+           style="position: fixed;top:84px">
+    <md-icon>save</md-icon>
+</md-button>
+
+<ui-view></ui-view>
+
+<md-fab-speed-dial ng-if="ctrl.isEvent" md-direction="up" md-open="ctrl.actionOpen"
+                   class="md-scale md-fab-bottom-right" style="position: fixed">
+    <md-fab-trigger>
+        <md-button aria-label="Menu" class="md-primary md-fab">
+            <md-icon>menu</md-icon>
+        </md-button>
+    </md-fab-trigger>
+
+    <md-fab-actions>
+        <md-button ng-click="ctrl.delete()" aria-label="delete" class="md-fab md-warn">
+            <md-icon>delete</md-icon>
+        </md-button>
+        <md-button aria-label="Add" ui-sref="admin.events.create" class="md-fab">
+            <md-icon>add</md-icon>
+        </md-button>
+        <md-button aria-label="List" class="md-fab"
+                   ui-sref="admin.events.list">
+            <md-icon>list</md-icon>
+        </md-button>
+        <md-button class="md-fab md-accent" ng-if="ctrl.preview"
+                   ui-sref="admin.events.event({id:ctrl.realEvent.id,action:'edit'})">
+            <md-icon>edit</md-icon>
+        </md-button>
+        <md-button class="md-fab md-accent" ng-if="!ctrl.preview"
+                   ui-sref="admin.events.event({id:ctrl.realEvent.id,action:'preview'})">
+            <md-icon>slideshow</md-icon>
+        </md-button>
+    </md-fab-actions>
+</md-fab-speed-dial>
+
+<md-button ng-if="ctrl.isCreate" aria-label="Add" style="position: fixed"
+           class="md-fab md-fab-bottom-right" ui-sref="admin.events.list">
+    <md-icon>list</md-icon>
+</md-button>
