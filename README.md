@@ -1,3 +1,2 @@
-#Abou Event 
-
-Public event manager 
+# AbouEvent - Open Source Event Manager
+An event management tool
