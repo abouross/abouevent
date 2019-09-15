@@ -14,3 +14,6 @@
 Route::get('/', function () {
     return view('welcome');
 });
+\Illuminate\Support\Facades\Route::get('admin/password/reset/{token}', function () {
+    throw new \Facade\FlareClient\Http\Exceptions\NotFound();
+})->name('password.reset');
